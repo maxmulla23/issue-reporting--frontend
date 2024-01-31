@@ -16,9 +16,11 @@ export default function LoginForm() {
                 </CardHeader>
                 <CardBody className="flex flex-col gap-4">
                     <Input 
+                        color="teal"
                         type="email"
                         label="Email" size="lg" />
                     <Input 
+                        color="teal"
                         type="password"
                         label="Password" size="lg" />
                     <div className="-ml-2.5">
