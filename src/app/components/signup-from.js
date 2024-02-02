@@ -1,5 +1,5 @@
 'use client'
-import { Button, Card, CardBody, CardFooter, CardHeader, Input, Typography } from "@material-tailwind/react";
+import { Button, Card, CardBody, CardFooter, CardHeader, Input, Radio, Typography } from "@material-tailwind/react";
 import React from "react";
 
 export default function SignupForm() {
@@ -31,6 +31,8 @@ export default function SignupForm() {
                         type="password"
                         color="teal"
                         label="enter password" size="lg" />
+                    <Radio name="type" label="Student" />
+                    <Radio name="type" label="Lecturer" />
                 </CardBody>
                 <CardFooter className="pt-0">
                     <Button
