@@ -33,7 +33,7 @@ export default function Home() {
             <div>
             </div>
             <div>
-            <button type="button" onClick={() => router.push('/Login')}
+            <button type="button" onClick={() => router.push('/login')}
               size="md"
               className="btn bg-teal-700 hover:bg-teal-600 text-black font-bold h-12 py-2 px-4 rounded"
             >
