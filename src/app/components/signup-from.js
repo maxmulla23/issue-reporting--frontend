@@ -31,8 +31,10 @@ export default function SignupForm() {
                         type="password"
                         color="teal"
                         label="enter password" size="lg" />
-                    <Radio name="type" label="Student" />
-                    <Radio name="type" label="Lecturer" />
+                    <div className="flex flex-row">
+                        <Radio name="type" label="Student" />
+                        <Radio name="type" label="Lecturer" />
+                    </div>
                 </CardBody>
                 <CardFooter className="pt-0">
                     <Button
