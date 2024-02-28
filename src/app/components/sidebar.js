@@ -30,6 +30,14 @@ export default function Sidebar(){
                 </Typography>
             </div>
             <List>
+                <Link href="/dashboard">
+                    <ListItem>
+                    <ListItemPrefix>
+                    <UserCircleIcon className="h-5 w-5" />
+                    </ListItemPrefix>
+                        Home
+                    </ListItem>
+                </Link>
                 <Accordion
                     open={open === 1}
                     icon={
@@ -40,12 +48,14 @@ export default function Sidebar(){
                     }
                     >
                         <ListItem className="p-0" selected={open === 1}>
+                        
                             <AccordionHeader onClick={() => handleopen(1)} className="border-b-0 p-3">
+
                                 <ListItemPrefix>
                                 <PresentationChartBarIcon className="h-5 w-5" />
                                 </ListItemPrefix>
                                 <Typography color="blue-gray" className="mr-auto font-normal">
-                                    Home
+                                    Issues
                                 </Typography>
                             </AccordionHeader>
                         </ListItem>
