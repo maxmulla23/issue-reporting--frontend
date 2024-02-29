@@ -25,20 +25,21 @@ export default function Page() {
     return (
       <div className="flex flex-row text-black-500 fixed ml-5 top-0 mt-4">
         <div className="flex flex-col">
-        <UserCircleIcon className="h-56 w-auto" />
-        <h1 className="ml-9">{user.username}</h1>
+        <UserCircleIcon className="h-56 w-auto ml-2" />
+        <h1 className="ml-14 text-2xl">{user.username}</h1>
         </div>
         <div className="left-30 ml-12 mt-20 ">
           <h1 className="font-mono md:font-serif text-5xl mt-3">{user.email}</h1>
           <p className="font-sans text-lg mt-3">{user.Usertype}</p>
           <button className="bg-teal-400 text-white font-bold py-2 px-4 border border-teal-400 mt-3">Edit Profile</button>
+          <hr className="my-50 mt-5 border-blue-gray-200" />
           <div className="mt-6">
             <Tabs value={activeTab}>
               <TabsHeader 
-                className="rounded-none border-b border-blue-gray-50 text-lg bg-gray-100 p-0"
+                className="rounded-none border-b text-black border-blue-gray-50 text-lg bg-gray-100 p-0 gap-10"
                 indicatorProps={{
                   className:
-                    "bg-transparent border-b-2 border-gray-800 shadow-none rounded-none",
+                    "bg-teal-100 border-b-2 border-gray-800 shadow-none rounded-none",
                 }}
                 >
                   {data.map(({ label, value }) => (
