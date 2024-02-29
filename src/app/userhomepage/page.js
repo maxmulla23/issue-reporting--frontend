@@ -2,7 +2,8 @@
 import React from "react";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { Tabs, TabsHeader, Tab } from "@material-tailwind/react";
+import { Tabs, TabsHeader, Tab, Popover, PopoverHandler, PopoverContent } from "@material-tailwind/react";
+import ReportBugform from "../components/reportbug";
 
 const user = {
   username: "maxmulla",
@@ -12,6 +13,7 @@ const user = {
 
 export default function Page() {
   const [activeTab, setActiveTab] = React.useState("html");
+  
   const data = [
     {
       label: "Bug Issue",
@@ -31,7 +33,15 @@ export default function Page() {
         <div className="left-30 ml-12 mt-20 ">
           <h1 className="font-mono md:font-serif text-5xl mt-3">{user.email}</h1>
           <p className="font-sans text-lg mt-3">{user.Usertype}</p>
-          <button className="bg-teal-400 text-white font-bold py-2 px-4 border border-teal-400 mt-3">Edit Profile</button>
+          <Popover>
+            <PopoverHandler>
+            <button className="bg-teal-400 text-white font-bold py-2 px-4 border border-teal-400 mt-3">Report Bug</button>
+            </PopoverHandler>
+            <PopoverContent>
+              <ReportBugform />
+            </PopoverContent>
+          </Popover>
+          
           <hr className="my-50 mt-5 border-blue-gray-200" />
           <div className="mt-6">
             <Tabs value={activeTab}>
@@ -39,7 +49,7 @@ export default function Page() {
                 className="rounded-none border-b text-black border-blue-gray-50 text-lg bg-gray-100 p-0 gap-10"
                 indicatorProps={{
                   className:
-                    "bg-teal-100 border-b-2 border-gray-800 shadow-none rounded-none",
+                    "bg-teal-50 border-b-2 border-gray-800 shadow-none rounded-none",
                 }}
                 >
                   {data.map(({ label, value }) => (
