@@ -1,7 +1,8 @@
 'use client'
+import React from "react";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
-import { Tab } from "@headlessui/react";
+import { Tabs, TabsHeader, Tab } from "@material-tailwind/react";
 
 const user = {
   username: "maxmulla",
@@ -10,8 +11,17 @@ const user = {
 }
 
 export default function Page() {
-  
-  const [activeTab, setActiveTab] = useState('Contributions');
+  const [activeTab, setActiveTab] = React.useState("html");
+  const data = [
+    {
+      label: "Bug Issue",
+      value: "bugIssue",
+    },
+    {
+      label: "Recommendations",
+      value: "recommendations",
+    }
+  ]
     return (
       <div className="flex flex-row text-black-500 fixed ml-5 top-0 mt-4">
         <div className="flex flex-col">
@@ -22,8 +32,27 @@ export default function Page() {
           <h1 className="font-mono md:font-serif text-5xl mt-3">{user.email}</h1>
           <p className="font-sans text-lg mt-3">{user.Usertype}</p>
           <button className="bg-teal-400 text-white font-bold py-2 px-4 border border-teal-400 mt-3">Edit Profile</button>
-          <div className="mt-3">
-            
+          <div className="mt-6">
+            <Tabs value={activeTab}>
+              <TabsHeader 
+                className="rounded-none border-b border-blue-gray-50 text-lg bg-gray-100 p-0"
+                indicatorProps={{
+                  className:
+                    "bg-transparent border-b-2 border-gray-800 shadow-none rounded-none",
+                }}
+                >
+                  {data.map(({ label, value }) => (
+                    <Tab
+                      key={value}
+                      value={value}
+                      onClick={() => setActiveTab(value)}
+                      className={activeTab === value ? "text-gray-700" : ""}
+                    >
+                      {label}
+                    </Tab>
+                  ))}
+                </TabsHeader>
+            </Tabs>
           </div>
         </div>
         
