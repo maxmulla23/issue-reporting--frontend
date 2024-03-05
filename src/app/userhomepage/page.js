@@ -3,7 +3,7 @@ import React from "react";
 import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import { Tabs, TabsHeader, Tab, Popover, PopoverHandler, PopoverContent } from "@material-tailwind/react";
-import ReportBugform from "../components/reportbug";
+import ReportBugform from "../components/forms/reportbug";
 
 const user = {
   username: "maxmulla",
