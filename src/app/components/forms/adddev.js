@@ -4,6 +4,8 @@ import { Card, Typography } from "@material-tailwind/react"
 
 export default function AddDeveloperForm(){
     return(
+        <>
+        <div>
         <Card color="white">
             <Typography variant="h5" color="teal">
                 Add New Developer
@@ -29,5 +31,7 @@ export default function AddDeveloperForm(){
                     </Button>
                 </CardFooter>
         </Card>
+        </div>
+        </>
     )
 }

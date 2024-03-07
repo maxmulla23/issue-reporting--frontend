@@ -1,6 +1,7 @@
 'use client'
 
-import { Button, Card, Typography } from "@material-tailwind/react"
+import AddDeveloperForm from "@/app/components/forms/adddev";
+import { Button, Card, Popover, PopoverContent, PopoverHandler, Typography } from "@material-tailwind/react"
 
 
 const TABLE_HEAD = ["Name", "Email", " "]
@@ -20,7 +21,15 @@ export default async function Page()
     return(
         <div className="mt-10">
             <Typography variant="h2" color="teal">Developers</Typography>
-            <Button color="teal" className="mt-5">Add Developer</Button>
+            <Popover>
+                <PopoverHandler>
+                <Button color="teal" className="mt-5">Add Developer</Button>
+                </PopoverHandler>
+                <PopoverContent>
+                    <AddDeveloperForm />
+                </PopoverContent>
+            </Popover>
+           
         <Card className="h-full w-full overflow-scroll">
             <table className="w-full min-w-max table-auto text-left">
                 <thead>
