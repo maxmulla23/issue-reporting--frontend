@@ -46,7 +46,7 @@ export default function Page() {
                         <tr key={fname}>
                             <td className={classes}>
                                 <Typography variant="small" color="blue-gray" className="font-normal">
-                                    {fname}
+                                    {TABLE_ROWS.fname}
                                 </Typography>
                             </td>
                         </tr>
