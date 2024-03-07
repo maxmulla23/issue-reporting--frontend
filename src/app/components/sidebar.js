@@ -8,6 +8,7 @@ import {
     Cog6ToothIcon,
     InboxIcon,
     PowerIcon,
+    UserGroupIcon,
   } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -100,6 +101,14 @@ export default function Sidebar(){
                         </ListItemPrefix>
                         Users
                     </ListItem>
+                    </Link>
+                    <Link href="/dashboard/developers">
+                        <ListItem>
+                            <ListItemPrefix>
+                                <UserGroupIcon className="h-5 w-5" />
+                            </ListItemPrefix>
+                            Developers
+                        </ListItem>
                     </Link>
                     
             </List>
