@@ -1,25 +1,21 @@
 'use client'
 
 import React from "react";
-import { Card, Typography } from "@material-tailwind/react";
+import { Button, Card, Typography } from "@material-tailwind/react";
 
-const TABLE_HEAD = ["Fisrt Name", "Last Name", "User type" , "e-mail address", ""];
-const TABLE_ROWS = [
+const TABLE_HEAD = ["UserName", "e-mail address", "Phone Number" ,  "user type" , " "];
+
+async function getData() {
+    const res = await fetch('http://localhost:5030/api/User');
+    if(!res.ok)
     {
-        fname: "Maxwell",
-        lname: "Mulla",
-        usertype: "student",
-        email: "maxmulla23@gmail.com",
-    },
-    {
-        fname: "Iweene",
-        lname: "Wanjiru",
-        usertype: "lecturer",
-        email: "iweene@gmail.com",
+        throw new Error('failed to fetch user data')
     }
-]
+    return res.json();
+}
 
-export default function Page() {
+export default async function Page() {
+    const data = await getData();
     return(
         <Card className="h-full w-full overflow-scroll">
             <table className="w-full min-w-max table-auto text-left">
@@ -39,18 +35,33 @@ export default function Page() {
                     </tr>
                 </thead>
                 <tbody>
-                    {TABLE_ROWS.map(({ fname, lname, usertype, email }, index) => {
-                        const islast = index === TABLE_ROWS.length - 1;
-                        const classes = islast ? "p-4" : "p-4 borderr-b border-blue-gray-50";
+                    {data.map((users) => (
+                       <tr key={users} className="even:bg-blue-gray-50/50">
+                       <td className="p-4">
+                           <Typography variant="small" color="blue-gray" className="font-normal">
+                           {users.userName}
+                           </Typography>   
+                       </td>
 
-                        <tr key={fname}>
-                            <td className={classes}>
-                                <Typography variant="small" color="blue-gray" className="font-normal">
-                                    {TABLE_ROWS.fname}
-                                </Typography>
-                            </td>
-                        </tr>
-                    })}
+                       <td className="p-4">
+                           <Typography variant="small" color="blue-gray" className="font-normal">
+                           {users.email}
+                           </Typography>   
+                       </td>
+                       <td className="p-4">
+                           <Typography variant="small" color="blue-gray" className="font-normal">
+                           {users.phoneNumber}
+                           </Typography>   
+                       </td>
+                       <td className="p-4">
+                           <Typography variant="small" color="blue-gray" className="font-normal">
+                           {users.userType}
+                           </Typography>   
+                       </td>
+                       
+                   </tr>
+                    ))}
+                       
                 </tbody>
             </table>
         </Card>

@@ -1,6 +1,6 @@
 'use client'
 import { UserCircleIcon } from "@heroicons/react/24/solid"
-import LoginForm from "../components/login-form"
+import LoginForm from "../components/forms/login-form"
 
 export default function Page() {
     return(
