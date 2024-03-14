@@ -9,7 +9,7 @@ async function getData() {
   const res = await fetch('http://localhost:5030/api/Todo');
   if(!res.ok)
   {
-      throw new Error('failed to fetch task data')
+    throw new Error('failed to fetch task data')
   }
   return res.json();
 }
