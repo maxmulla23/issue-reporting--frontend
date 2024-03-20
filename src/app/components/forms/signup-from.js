@@ -18,11 +18,7 @@ export default function SignupForm() {
                     <Input
                         color="teal"
                         type="text"
-                        label="first name" size="lg" />
-                    <Input
-                        color="teal"
-                        type="text"
-                        label="last name" size="lg" />
+                        label="user name" size="lg" />
                     <Input
                         type="email"
                         color="teal" 

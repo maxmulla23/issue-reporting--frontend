@@ -12,7 +12,11 @@ export default async function LoginForm() {
         const formData = new FormData(event.target)
         const response = await fetch ("http://localhost:5030/api/User/login", {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
             body: formData,
+            mode: 'cors'
         })
         const data = await response.json()
     } catch (error) {
@@ -35,13 +39,15 @@ export default async function LoginForm() {
                     <form onSubmit={onSubmit}>
                     <Input
                         type="email"
-                        label="Email" size="lg" 
+                        id="email"
+                        label="Email Address" size="lg" 
                         placeholder="Email"
                         color="teal"
                        
                         />
                     <Input
                         type="password"
+                        id="password"
                         label="Password" size="lg" 
                         placeholder="password"
                         color="teal"
