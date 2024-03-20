@@ -1,28 +1,38 @@
 'use client'
-import { FormEvent } from "react";
-import React from "react";
+import React, { FormEvent, useState } from "react";
 import { Card, CardHeader, CardBody, CardFooter, Typography, Checkbox, Button, Input } from "@material-tailwind/react";
 
 
 export default async function LoginForm() {
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
+
     async function onSubmit(event) {
-       try {
         event.preventDefault()
-    
+        setIsLoading(true);
+        setError(null)
+       try {
         const formData = new FormData(event.target)
         const response = await fetch ("http://localhost:5030/api/User/login", {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: formData,
             mode: 'cors'
         })
+        if (!response.ok) {
+            throw new Error('failed to submit the data')
+        }
+
         const data = await response.json()
+        console.log(data);
     } catch (error) {
-        console.error(error.message);
+        setError(error.message)
+        console.error(error);
+    } finally {
+        setIsLoading(false)
     }
     }
+
+
     return(
         <Card className="w-96">
             <CardHeader
@@ -35,8 +45,10 @@ export default async function LoginForm() {
                     </Typography>
                 </CardHeader>
                 <div className="flex flex-col gap-4 mb-4">
-                <CardBody className="flex flex-col gap-4">
+                    {error && <div style={{color:"red"}}>{error}</div>}
                     <form onSubmit={onSubmit}>
+                <CardBody className="flex flex-col gap-4">
+                    
                     <Input
                         type="email"
                         id="email"
@@ -61,12 +73,14 @@ export default async function LoginForm() {
                     variant="gradient" 
                     color="teal"
                     fullWidth
-                    
+                    disabled={isLoading}
                     >
-                        Sign In
+                    
+                        {isLoading ? 'Loading...' : 'Login'}
                     </Button>
-                    </form>
+                
                 </CardBody>
+                </form>
                 </div>
                 <CardFooter className="pt-0">
                    
