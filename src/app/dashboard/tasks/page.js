@@ -1,7 +1,7 @@
 'use client'
 import React from "react";
 import CreateTask from "@/app/components/forms/create-taskform";
-import { Popover, PopoverContent, PopoverHandler } from "@material-tailwind/react";
+import { Card, Popover, PopoverContent, PopoverHandler, Typography } from "@material-tailwind/react";
 
 const TABLE_HEAD = ["Task Title", "Description", "Start Date", "End Date", "Status", "Devloper" ]
 
@@ -47,7 +47,7 @@ export default async function page() {
                 </thead>
                 <tbody>
                     {data.map((tasks) => (
-                       <tr key={users} className="even:bg-blue-gray-50/50">
+                       <tr key={tasks} className="even:bg-blue-gray-50/50">
                        <td className="p-4">
                            <Typography variant="small" color="blue-gray" className="font-normal">
                            {tasks.taskTitle}

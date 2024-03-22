@@ -1,37 +1,42 @@
 'use client'
-import React, { FormEvent, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, CardHeader, CardBody, CardFooter, Typography, Checkbox, Button, Input } from "@material-tailwind/react";
 
 
-export default async function LoginForm() {
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
 
-    async function onSubmit(event) {
-        event.preventDefault()
-        setIsLoading(true);
-        setError(null)
-       try {
-        const formData = new FormData(event.target)
-        const response = await fetch ("http://localhost:5030/api/User/login", {
+
+export default function LoginForm() {
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+const  [isLoggedIn, setIsLoggedIn] = useState(false)
+ 
+useEffect(() => {
+const isLoggedIn = localStorage.getItem( "loggedin" );
+if ( isLoggedIn === "true") {
+    setIsLoggedIn(true)
+}
+})
+
+const handleLogin = async () => {
+    try {
+        const response = await fetch('http://localhost:5030/api/User/login', {
             method: 'POST',
-            body: formData,
-            mode: 'cors'
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({  email, password })
         })
-        if (!response.ok) {
-            throw new Error('failed to submit the data')
-        }
-
         const data = await response.json()
-        console.log(data);
-    } catch (error) {
-        setError(error.message)
+        if (response.ok) {
+            setIsLoggedIn(true)
+            console.log(data)
+        } else {
+            throw new Error("Log In failed! try again")
+        }
+    } catch(error) {
         console.error(error);
-    } finally {
-        setIsLoading(false)
     }
-    }
-
+}
 
     return(
         <Card className="w-96">
@@ -45,24 +50,26 @@ export default async function LoginForm() {
                     </Typography>
                 </CardHeader>
                 <div className="flex flex-col gap-4 mb-4">
-                    {error && <div style={{color:"red"}}>{error}</div>}
-                    <form onSubmit={onSubmit}>
                 <CardBody className="flex flex-col gap-4">
                     
                     <Input
                         type="email"
                         id="email"
+                        value={email}
                         label="Email Address" size="lg" 
                         placeholder="Email"
                         color="teal"
+                        onChange={(e) => setEmail(e.target.value)}
                        
                         />
                     <Input
                         type="password"
                         id="password"
+                        value={password}
                         label="Password" size="lg" 
                         placeholder="password"
                         color="teal"
+                        onChange={(e) => setPassword(e.target.value)}
                       
                         />
                     <div className="-ml-2.5">
@@ -73,14 +80,13 @@ export default async function LoginForm() {
                     variant="gradient" 
                     color="teal"
                     fullWidth
-                    disabled={isLoading}
+                    onClick={handleLogin}
                     >
                     
-                        {isLoading ? 'Loading...' : 'Login'}
+                        Sign In
                     </Button>
                 
                 </CardBody>
-                </form>
                 </div>
                 <CardFooter className="pt-0">
                    
