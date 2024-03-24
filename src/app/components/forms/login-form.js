@@ -1,8 +1,8 @@
 'use client'
 import React, { useState, useEffect } from "react";
 import { Card, CardHeader, CardBody, CardFooter, Typography, Checkbox, Button, Input } from "@material-tailwind/react";
-import { useNavigate, Navigate } from "react-router-dom";
-import { UseDispatch } from "react-redux";
+import { useFormState, useFormStatus } from 'react-dom'
+import axios from "axios";
 
 export default function LoginForm() {
 
@@ -11,28 +11,30 @@ const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const  [isLoggedIn, setIsLoggedIn] = useState(false)
 
-useEffect(() => {
-if ( isLoggedIn === "true") {
-    setIsLoggedIn(true)
-}
-})
+
 
 const handleLogin = async () => {
     try {
-        const response = await fetch('http://localhost:5030/api/User/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({  email, password })
-        })
-        const data = await response.json()
-        if (response.ok) {
-            setIsLoggedIn(true)
-            console.log(data)
-        } else {
-            throw new Error("Log In failed! try again")
-        }
+        // const response = await fetch('http://localhost:5030/api/User/login', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json'
+        //     },
+        //     body: JSON.stringify({  email, password })
+        // })
+        // console.log(response)
+        // const data = await response.json()
+
+        const response = await axios.post('http://localhost:5030/api/User/login', {  email, password })
+
+        console.log(response)
+
+        // if (response.ok) {
+        //     setIsLoggedIn(true)
+        //     console.log(data)
+        // } else {
+        //     throw new Error("Log In failed! try again")
+        // }
     } catch(error) {
         console.error(error);
     }

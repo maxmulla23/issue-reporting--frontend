@@ -3,6 +3,7 @@ import { UserCircleIcon } from "@heroicons/react/24/solid"
 import LoginForm from "../components/forms/login-form"
 
 export default function Page() {
+
     return(
         <>
         <div className="flex justify-center items-center mt-6 ">

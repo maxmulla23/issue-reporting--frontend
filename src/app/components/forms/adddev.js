@@ -1,6 +1,6 @@
 'use client'
 
-import { Card, Typography } from "@material-tailwind/react"
+import { Card, CardBody, CardFooter, Input, Typography } from "@material-tailwind/react"
 
 export default function AddDeveloperForm(){
     return(
@@ -11,7 +11,7 @@ export default function AddDeveloperForm(){
                 Add New Developer
             </Typography>
             <CardBody className="flex flex-col gap-4">
-                    <Input 
+                    <Input
                         color="teal"
                         type="text"
                         label="Name" size="lg" />
