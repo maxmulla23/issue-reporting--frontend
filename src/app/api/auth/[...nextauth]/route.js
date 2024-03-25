@@ -66,6 +66,21 @@ export const authOptions = {
     }),
   ],
 
+  jwt: {
+    async sign({ token, user }) {
+      if (user) {
+        token.user = {
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          //   isAdmin: user.isAdmin,
+          //   name: user.name, // Include additional fields as needed
+        };
+      }
+      return token;
+    },
+  },
+
   callbacks: {
     // async signIn({ user, account, profile, email, credentials }) {
     //     console.log(user, "USER IN ")
@@ -105,9 +120,18 @@ export const authOptions = {
     //     return token;
     //   },
     // },
+    async signIn({ user, account, profile, email, credentials }) {
+      return true;
+    },
+    async redirect({ url, baseUrl }) {
+      return baseUrl;
+    },
 
     async session({ session, token, user }) {
-      return { ...token, ...user, ...session };
+      return token;
+    },
+    async jwt({ token, user, account, profile, isNewUser }) {
+      return { ...token, ...user };
     },
   },
   secret: process.env.SECRET,
