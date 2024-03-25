@@ -2,22 +2,23 @@
 
 import AddDeveloperForm from "@/app/components/forms/adddev";
 import { Button, Card, Popover, PopoverContent, PopoverHandler, Typography } from "@material-tailwind/react"
+import axios from "axios";
 
 
 const TABLE_HEAD = ["Name", "Email", " "]
+const data = []
+// async function getData() {
+//     const res = await axios.get(`api/developer`);
+//     if(!res.ok)
+//     {
+//         throw new Error('failed')
+//     }
+//     return res.json();
+// }
 
-async function getData() {
-    const res = await fetch('http://localhost:5030/api/Developer');
-    if(!res.ok)
-    {
-        throw new Error('failed')
-    }
-    return res.json();
-}
-
-export default async function Page()
+export default function Page()
 {
-    const data = await getData();   
+    // const data = await getData();   
     return(
         <div className="mt-10">
             <Typography variant="h2" color="teal">Developers</Typography>
@@ -53,7 +54,7 @@ export default async function Page()
                         <tr key={developers} className="even:bg-blue-gray-50/50">
                             <td className="p-4">
                                 <Typography variant="small" color="blue-gray" className="font-normal">
-                                {developers.fullName}
+                                {developers.name}
                                 </Typography>   
                             </td>
 
