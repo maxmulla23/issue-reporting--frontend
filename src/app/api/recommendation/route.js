@@ -22,3 +22,25 @@ export async function POST(request) {
         return new NextResponse("Internal server Error", { status: 500 })
     }
 }
+
+export async function GET(request) {
+    const { searchParams } = new URL(request.url);
+
+  console.log(searchParams);
+
+  let userId = parseInt(searchParams.get("userId"));
+
+  console.log(userId);
+  try {
+    const userIssues = await prisma.issue.findMany({
+      where: {
+        userId,
+      },
+    });
+
+    return NextResponse.json(userIssues);
+  } catch (error) {
+    console.log(error);
+    return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
