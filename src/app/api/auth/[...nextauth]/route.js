@@ -41,7 +41,7 @@ export const authOptions = {
           },
         });
 
-        localStorage.setItem('user', JSON.stringify(user));
+        // localStorage.setItem('user', JSON.stringify(user));
 
         // console.log(user);
 

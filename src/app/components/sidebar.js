@@ -13,9 +13,15 @@ import {
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import { signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
   
 export default function Sidebar(){
+    const  router = useRouter();
+    const handleLogOut = () => {
+        signOut()
+        router.push("/")
+    }
     const [open, setOpen] = React.useState(0);
 
     const handleopen = (value) => {
@@ -113,7 +119,7 @@ export default function Sidebar(){
                     
             </List>
             <hr className="my-50 border-blue-gray-50" />
-            <List>
+            <List onClick={handleLogOut}>
                 <ListItem>
                     <ListItemPrefix>
                         <PowerIcon className="h-5 w-5" />
