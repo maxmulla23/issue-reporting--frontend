@@ -27,23 +27,14 @@ export default function Page() {
   const [activeTab, setActiveTab] = React.useState("html");
   React.useEffect(()=> {
     async function getUserIssues () { 
-      const response = await axios.get(`/api/issue?userId=${1}`)
+      const response = await axios.get(`/api/issue?userId={session?.data?.id}`)
       console.log(response)
     }
     getUserIssues()
   }, [])
   const session = useSession();
 
-  const data = [
-    {
-      label: "Bug Issue",
-      value: "bugIssue",
-    },
-    {
-      label: "Recommendations",
-      value: "recommendations",
-    },
-  ];
+
   return (
     <div className="flex flex-row text-black-500 fixed ml-5 top-0 mt-4 w-[75%] overflow-hidden">
       <div className="flex flex-col">
@@ -54,17 +45,8 @@ export default function Page() {
         <h1 className="font-mono md:font-serif text-3xl mt-3">
           {session?.data?.email}
         </h1>
-        <p className="font-sans text-lg mt-3">{user.Usertype}</p>
-        <Popover>
-          <PopoverHandler>
-            <button className="bg-teal-400 text-white font-bold py-2 px-4 border border-teal-400 mt-3">
-              Report Bug
-            </button>
-          </PopoverHandler>
-          <PopoverContent>
-            <ReportBugform />
-          </PopoverContent>
-        </Popover>
+        
+       
 
         {/* <hr className="my-50 mt-5 border-blue-gray-200 " /> */}
         <Tabs value={activeTab}>
@@ -97,9 +79,17 @@ export default function Page() {
               <div className="flex flex-col w-full space-y-6">
                 <div className="flex justify-between">
                   <h3 className="text-4xl my-6 font-bold">My Issues</h3>
-                  <button className="bg-teal-400 text-white font-bold py-2 px-4 border border-teal-400 mt-3">
+                  <Popover>
+          <PopoverHandler>
+          <button className="bg-teal-400 text-white font-bold py-2 px-4 border border-teal-400 mt-3">
                     New Issue
                   </button>
+          </PopoverHandler>
+          <PopoverContent>
+            <ReportBugform />
+          </PopoverContent>
+        </Popover>
+                  
                 </div>
                 {[1, 2, 3, 4, 5].map((item) => (
                   <Alert variant="outlined">

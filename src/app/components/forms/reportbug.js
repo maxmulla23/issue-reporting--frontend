@@ -4,11 +4,14 @@ import { Button, Card, CardBody, CardFooter, CardHeader, Input, Textarea, Typogr
 import  React from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
 
 export default function ReportBugform(){
+    const session = useSession()
     const [formData, setFormData] = React.useState({
         title: "",
-        description: ""
+        description: "",
+        userId:session?.data?.id
     })
     console.log(formData)
 
@@ -20,9 +23,11 @@ export default function ReportBugform(){
             }
             console.log(newFormdata)
             const response = await axios.post("/api/issue", newFormdata)
+            
             console.log(response)
             toast.success("Your bug report has been submitted!")
         } catch (error) {
+            console.log(error)
             toast.error("Error occurred!");
         }
     }
