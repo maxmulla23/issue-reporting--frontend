@@ -1,12 +1,15 @@
 'use client'
 import { Button, Card, CardBody, CardFooter, Input, Textarea } from "@material-tailwind/react";
+import { useSession } from "next-auth/react";
 import React from "react";
 
 export default function RecommendationForm()
 {
+    const session = useSession();
     const [formData, setFormData] = React.useState({
         title: "",
-        description: ""
+        description: "",
+        userId: session?.data?.id
     })
     console.log(formData)
 

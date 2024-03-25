@@ -24,7 +24,7 @@ export default function LoginForm() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    // console.log(session);
+    console.log(session);
     if (
       session?.status === "authenticated" &&
       session?.data?.email.includes("admin")
