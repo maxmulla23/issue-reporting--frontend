@@ -32,15 +32,39 @@ export async function GET(request) {
 
   console.log(userId);
   try {
-    const userIssues = await prisma.issue.findMany({
+    const userRecomm = await prisma.recommendation.findMany({
       where: {
         userId,
       },
     });
 
-    return NextResponse.json(userIssues);
+    return NextResponse.json(userRecomm);
   } catch (error) {
     console.log(error);
     return new NextResponse("Internal Server Error", { status: 500 });
+  }
+}
+
+export async function PUT(request) {
+  const body = await request.json()
+  const { title, description, id } = body;
+
+  if (!title || !description) {
+    return new NextResponse("Missing Fields", { status: 400 });
+  }
+
+  try {
+    const updateRecommendation = await prisma.recommendation.update({
+      where: {
+        id,
+      },
+      data: {
+        title,
+        description,
+      },
+    })
+    return NextResponse.json(updateRecommendation);
+  } catch (error) {
+    console.log(error)
   }
 }
