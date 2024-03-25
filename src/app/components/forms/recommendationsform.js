@@ -1,30 +1,69 @@
 'use client'
-import { Input } from "@material-tailwind/react";
+import { Button, Card, CardBody, CardFooter, Input, Textarea } from "@material-tailwind/react";
 import React from "react";
 
 export default function RecommendationForm()
 {
+    const [formData, setFormData] = React.useState({
+        title: "",
+        description: ""
+    })
+    console.log(formData)
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            let newFormdata = {
+                ...formData,  
+            }
+            console.log(newFormdata)
+            const response = await axios.post("/api/recommendation", newFormdata)
+            console.log(response)
+            toast.success("Your bug report has been submitted!")
+        } catch (error) {
+            toast.error("Error occurred!");
+        }
+    }
+
+    const handleChange = (e) => {
+        const name = e.target.name;
+        const  value = e.target.value;
+
+        const currentInputFieldData = {
+            [name]: value,
+        }
+        const updatedData = {
+            ...formData,
+            ...currentInputFieldData,
+        }
+        setFormData(updatedData)
+    }
+
     return (
         <>
         <div>
             <Card className="w-96">
                
                 <CardBody className="flex flex-col gap-4">
-                    <Input 
+                    <Input
+                        onChange={handleChange}
                         color="teal"
                         type="text"
-                        label="Title" size="lg" />
-                    <Input 
+                        label="Title" size="lg" 
+                        name="title"/>
+                    <Textarea 
+                        onChange={handleChange}
                         color="teal"
                         type="text"
-                        label="Description" size="lg" />
+                        label="Description" size="lg" 
+                        name="title"/>
                     
                 </CardBody>
                 <CardFooter>
                     <Button
                     variant="filled"
                     color="teal"
-                    
+                    onClick={handleSubmit}
                     >
                         Submit
                     </Button>
