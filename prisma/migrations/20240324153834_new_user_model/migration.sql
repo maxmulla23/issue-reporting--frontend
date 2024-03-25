@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE `User` ADD COLUMN `isAdmin` BOOLEAN NOT NULL DEFAULT false,
+    ADD COLUMN `isLecturer` BOOLEAN NOT NULL DEFAULT false,
+    ADD COLUMN `isStudent` BOOLEAN NOT NULL DEFAULT false;
