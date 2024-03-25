@@ -1,45 +1,127 @@
-'use client'
-import { Button, Card, CardBody, CardFooter, CardHeader, Input, Radio, Typography } from "@material-tailwind/react";
+"use client";
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Input,
+  Radio,
+  Typography,
+} from "@material-tailwind/react";
+import axios from "axios";
 import React from "react";
+import { toast } from "react-toastify";
 
 export default function SignupForm() {
-    return(
-        <Card className="w-96">
-            <CardHeader
-                variant="gradient"
-                color="teal"
-                className="mb-4 grid h-28 place-items-center"
-                >
-                    <Typography variant="h3" color="white">
-                        Create Account
-                    </Typography>
-                </CardHeader>
-                <CardBody className="flex flex-col gap-4">
-                    <Input
-                        color="teal"
-                        type="text"
-                        label="user name" size="lg" />
-                    <Input
-                        type="email"
-                        color="teal" 
-                        label="email address" size="lg" />
-                    <Input
-                        type="password"
-                        color="teal"
-                        label="enter password" size="lg" />
-                    <div className="flex flex-row">
-                        <Radio name="type" label="Student" />
-                        <Radio name="type" label="Lecturer" />
-                    </div>
-                </CardBody>
-                <CardFooter className="pt-0">
-                    <Button
-                    variant="filled"
-                    color="teal"
-                    fullWidth>
-                        Create Account
-                    </Button>
-                </CardFooter>
-        </Card>
-    )
+  const [formData, setFormData] = React.useState({
+    name: "",
+    email: "",
+    password: "",
+    type: "",
+  });
+
+  console.log(formData);
+
+  const onsubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.email) return;
+    try {
+      let newFormdata = {
+        ...formData,
+        isStudent: formData.type === "student",
+        isLecturer: formData.type === "lecturer",
+        isAdmin: formData.type === "admin",
+      };
+
+      console.log(newFormdata);
+
+      const response = await axios.post("/api/register", newFormdata);
+
+      console.log(response);
+
+      toast.success("User Created successfully!");
+    } catch (error) {
+      toast.error("Something went wrong! Error");
+    }
+  };
+
+  const handleChange = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+
+    //Create an object for the current input field
+    const currentInputFieldData = {
+      [name]: value,
+    };
+
+    //Merge the data object with the current input field data object
+    const updatedData = {
+      ...formData,
+      ...currentInputFieldData,
+    };
+    setFormData(updatedData);
+  };
+
+  return (
+    <Card className="w-96">
+      <CardHeader
+        variant="gradient"
+        color="teal"
+        className="mb-4 grid h-28 place-items-center"
+      >
+        <Typography variant="h3" color="white">
+          Create Account
+        </Typography>
+      </CardHeader>
+      <CardBody className="flex flex-col gap-4">
+        <Input
+          required
+          onChange={handleChange}
+          color="teal"
+          type="text"
+          label="user name"
+          size="lg"
+          name="name"
+        />
+        <Input
+          required
+          onChange={handleChange}
+          type="email"
+          color="teal"
+          label="email address"
+          size="lg"
+          name="email"
+        />
+        <Input
+          required
+          onChange={handleChange}
+          type="password"
+          color="teal"
+          label="enter password"
+          size="lg"
+          name="password"
+        />
+        <div className="flex flex-row">
+          <Radio
+            name="type"
+            value="student"
+            label="Student"
+            onChange={handleChange}
+          />
+          <Radio
+            name="type"
+            value="lecturer"
+            label="Lecturer"
+            onChange={handleChange}
+          />
+        </div>
+      </CardBody>
+      <CardFooter className="pt-0">
+        <Button variant="filled" color="teal" fullWidth onClick={onsubmit}>
+          Create Account
+        </Button>
+      </CardFooter>
+    </Card>
+  );
 }

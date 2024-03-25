@@ -1,8 +1,11 @@
-
-
+"use client";
+import { useSession, signOut } from "next-auth/react";
 export default function Page() {
-    return (
-        <><p>Welcome Admin</p>
-        </>
-    )
+  const { data: session } = useSession();
+  console.log(session);
+  return (
+    <>
+      <p>Welcome Admin</p>
+    </>
+  );
 }
