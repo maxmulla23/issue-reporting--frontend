@@ -10,8 +10,10 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import { toast } from "react-toastify";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
   const [formData, setFormData] = React.useState({
@@ -20,6 +22,15 @@ export default function SignupForm() {
     password: "",
     type: "",
   });
+const session = useSession();
+const router = useRouter();
+
+
+  useEffect(() => {
+    if (session?.status === 'authenticated') {
+       router.push('/login') 
+    }
+})
 
   console.log(formData);
 

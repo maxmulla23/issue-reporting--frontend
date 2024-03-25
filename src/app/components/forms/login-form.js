@@ -64,12 +64,12 @@ export default function LoginForm() {
       // console.log(response)
       // const data = await response.json()
 
-      const response = await axios.post(
-        "http://localhost:5030/api/User/login",
-        { email, password }
-      );
+      // const response = await axios.post(
+        // "http://localhost:5030/api/User/login",
+        // { email, password }
+      // );
 
-      console.log(response);
+      // console.log(response);
 
       // if (response.ok) {
       //     setIsLoggedIn(true)
