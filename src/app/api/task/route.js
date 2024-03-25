@@ -52,3 +52,25 @@ export async function PUT(request) {
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }
+export async function GET(request) {
+    console.log(request);
+    const { searchParams } = new URL(request.url);
+  
+    console.log(searchParams);
+  
+    let developerId = parseInt(searchParams.get("developerId"));
+  
+    console.log(userId);
+    try {
+      const devAssignedTasks = await prisma.task.findMany({
+        where: {
+          developerId,
+        },
+      });
+  
+      return NextResponse.json(devAssignedTasks);
+    } catch (error) {
+      console.log(error);
+      return new NextResponse("Internal Server Error", { status: 500 });
+    }
+  }
