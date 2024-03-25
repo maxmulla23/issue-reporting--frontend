@@ -17,7 +17,7 @@ import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 
 export default function CreateTask()
 {
-    const [startdate, setStartDate] = React.useState(null);
+    
     const [enddate, setEndDate] = React.useState(null);
 
     async function onSubmit(event) {
@@ -45,10 +45,6 @@ export default function CreateTask()
                         type="text"
                         label="Description" size="lg" 
                 />
-                
-
-                <label>Start Date:</label>
-        <DatePicker selected={startdate} className="color-teal-100" label="select start date" onChange={(date) => setStartDate(date)} dateFormat="MM/dd/yyyy" />
         <label>End Date:</label>
         <DatePicker selected={enddate} onChange={(date) => setEndDate(date)} dateFormat="MM/dd/yyyy" />
 
