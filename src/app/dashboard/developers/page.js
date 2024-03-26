@@ -6,7 +6,7 @@ import axios from "axios";
 
 
 const TABLE_HEAD = ["Name", "Email", " "]
-const data = []
+
 // async function getData() {
 //     const res = await axios.get(`api/developer`);
 //     if(!res.ok)
@@ -16,7 +16,7 @@ const data = []
 //     return res.json();
 // }
 
-export default function Page()
+export default async function Page()
 {
     // const data = await getData();   
     return(
@@ -50,7 +50,7 @@ export default function Page()
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((developers)=> (
+                {/* {data.map((developers)=> (
                         <tr key={developers} className="even:bg-blue-gray-50/50">
                             <td className="p-4">
                                 <Typography variant="small" color="blue-gray" className="font-normal">
@@ -68,7 +68,7 @@ export default function Page()
                             </td>
                         </tr>
                         
-                    ))}
+                    ))} */}
                 </tbody>
             </table>
         </Card>

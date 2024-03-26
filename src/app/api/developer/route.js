@@ -26,6 +26,19 @@ export async function POST(request) {
   }
 }
 
+export async function GET(request) {
+  
+  try {
+    const developers = await prisma.task.findMany();
+    console.log(developers);
+    return NextResponse.json(developers);
+   
+  } catch (error) {
+    console.log(error)
+    return new NextResponse("Internal Server Error", { status: 500 })
+  }
+}
+
 export async function PUT(request) {
   const body = await request.json();
   const { id, name, email } = body;
