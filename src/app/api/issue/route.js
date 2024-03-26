@@ -42,6 +42,8 @@ export async function POST(request) {
         description,
         userId,
       },
+      include: { reported }
+     
     });
 
     return NextResponse.json(newIssue);

@@ -98,7 +98,7 @@ export default function Page() {
                 </div>
                 {data?.map((data) => (
                   <Alert variant="ghost">
-                    <Typography>{data.title}</Typography>
+                    <Typography color="teal" variant="h4">{data.title}</Typography>
                     <span>{data.description}</span>
                   </Alert>
                 ))}
