@@ -24,7 +24,7 @@ export default function CreateTask()
         name: "",
         description: "",
         endDate:"",
-        assignedTo:""
+        developerId: ""
     })
     const [date, setDate] = React.useState(null);
     const [developer, setDeveloper] = React.useState()

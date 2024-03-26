@@ -27,7 +27,7 @@ const router = useRouter();
 
 
   useEffect(() => {
-    if (session?.status === 'authenticated') {
+    if (session?.status === 'loading') {
        router.push('/login') 
     }
 })
@@ -132,6 +132,18 @@ const router = useRouter();
         <Button variant="filled" color="teal" fullWidth onClick={onsubmit}>
           Create Account
         </Button>
+        <Typography variant="small" className="mt-6 flex justify-center">
+          have an account? proceed to 
+          <Typography
+            as="a"
+            href="/login"
+            variant="small"
+            color="blue-gray"
+            className="ml-1 font-bold"
+          >
+            Sign in
+          </Typography>
+        </Typography>
       </CardFooter>
     </Card>
   );
