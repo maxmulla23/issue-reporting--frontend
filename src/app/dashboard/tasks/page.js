@@ -2,32 +2,47 @@
 import React from "react";
 import CreateTask from "@/app/components/forms/create-taskform";
 import { Card, Popover, PopoverContent, PopoverHandler, Typography } from "@material-tailwind/react";
+import axios from "axios";
 
-const TABLE_HEAD = ["Task Title", "Description", "Start Date", "End Date", "Status", "Devloper" ]
+const TABLE_HEAD = ["Task Title", "Description", "Start Date", "End Date", "Status", "Assigned To" ]
 
-async function getData() {
-  const res = await fetch('http://localhost:5030/api/Todo');
-  if(!res.ok)
-  {
-    throw new Error('failed to fetch task data')
-  }
-  return res.json();
-}
+// async function getData() {
+//   const res = await fetch('http://localhost:5030/api/Todo');
+//   if(!res.ok)
+//   {
+//     throw new Error('failed to fetch task data')
+//   }
+//   return res.json();
+// }
 
 export default async function page() {
-  const data = await getData();
+
+    const [data, setData] = React.useState()
+    React.useEffect(() => {
+        async function getTasks () {
+            try {
+                const response = await axios.get(`/api/task`)
+                console.log(response);
+                setData(response.data)
+            } catch (error) {
+                console.log(error)
+            }
+           
+        }
+        getTasks()
+    })
     return(
         <div>
-        <h1>this is tasks page</h1>
+        <h1>this is data page</h1>
 
-        <Popover>
+         <Popover>
             <PopoverHandler>
             <button className="bg-teal-400 text-white font-bold py-2 px-4 border border-teal-400 mt-3">Create Task</button>
             </PopoverHandler>
             <PopoverContent>
               <CreateTask />
             </PopoverContent>
-          </Popover>
+          </Popover> 
           <Card className="h-full w-full overflow-scroll">
             <table className="w-full min-w-max table-auto text-left">
                 <thead>
@@ -46,42 +61,42 @@ export default async function page() {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((tasks) => (
-                       <tr key={tasks} className="even:bg-blue-gray-50/50">
+                    {data?.map((data) => (
+                       <tr key={data} className="even:bg-blue-gray-50/50">
                        <td className="p-4">
                            <Typography variant="small" color="blue-gray" className="font-normal">
-                           {tasks.taskTitle}
+                           {data.name}
                            </Typography>   
                        </td>
 
                        <td className="p-4">
                            <Typography variant="small" color="blue-gray" className="font-normal">
-                           {tasks.description}
+                           {data.description}
                            </Typography>   
                        </td>
                        <td className="p-4">
                            <Typography variant="small" color="blue-gray" className="font-normal">
-                           {tasks.startDate}
+                           {data.startDate}
                            </Typography>   
                        </td>
                        <td className="p-4">
                            <Typography variant="small" color="blue-gray" className="font-normal">
-                           {tasks.endDate}
+                           {data.endDate}
                            </Typography>   
                        </td>
                        <td className="p-4">
                            <Typography variant="small" color="blue-gray" className="font-normal">
-                           {tasks.status}
+                           {data.status}
                            </Typography>   
                        </td>
                        <td className="p-4">
                            <Typography variant="small" color="blue-gray" className="font-normal">
-                           {tasks.developer}
+                           {data.assignedTo}
                            </Typography>   
                        </td>
                        
                    </tr>
-                    ))}
+                    ))} 
                        
                 </tbody>
                 </table>

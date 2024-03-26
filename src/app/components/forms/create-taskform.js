@@ -8,30 +8,54 @@ import {
   PopoverHandler,
   PopoverContent,
   Button,
+  Select,
   } from "@material-tailwind/react";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 import React from "react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function CreateTask()
 {
     const [formData, setFormData] = React.useState({
         name: "",
         description: "",
-        
+        endDate:"",
+        assignedTo:""
     })
     const [date, setDate] = React.useState(null);
 
-    async function onSubmit(event) {
-        event.preventDefault()
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        let newFormdata = {
+            ...formData,
+        }
+        console.log(newFormdata)
+        const response = await axios.post("/api/task", newFormdata)
+        console.log(response)
+        toast.success("Task created successfully")
+      } catch(error) {
+        console.log(error)
+        toast.error("Failed! Please check your inputs.")
+      }
+    }
+    const handleChange = (e) => {
+      const name = e.target.name;
+      const value = e.target.value
 
-        const formData = new FormData(event.target)
-        const response = await  fetch("/api/task",  {
-            method: 'POST',
-            body: formData,
-    })
-        const data = await response.json();
+      const currentInputFieldData = {
+        [name]: value,
+      }
+      const updatedData ={
+        ...formData,
+        ...currentInputFieldData,
+      }
+      setFormData(updatedData)
+    }
+
     return(
         <>
         <div>
@@ -39,20 +63,35 @@ export default function CreateTask()
                 <CardBody className="flex flex-col gap-6">
                     
                 <Input 
+                        onChange={handleChange}
                         color="teal"
                         type="text"
-                        label="Title" size="lg" 
+                        label="Title" 
+                        size="lg"
+                        name="title"
+
                 />
                 <Textarea
+                        onChange={handleChange}
                         color="teal"
                         type="text"
-                        label="Description" size="lg" 
+                        label="Description" 
+                        name="description"
+                        size="lg" 
                 />
+                <Select
+                color="teal"
+                label="choose developer"
+                value="assignedTo"
+                onChange={handleChange}
+                >
+
+                </Select>
         <Popover placement="bottom">
         <PopoverHandler>
           <Input
             label="Choose End Date"
-            onChange={() => null}
+            onChange={handleChange}
             value={date ? format(date, "PPP") : ""}
           />
         </PopoverHandler>
@@ -99,7 +138,7 @@ export default function CreateTask()
       </Popover>
 
         <Button 
-        type="submit"
+        onClick={handleSubmit}
         variant="gradient"
         color="teal"
         >
@@ -111,4 +150,3 @@ export default function CreateTask()
         </div>
         </>
     )}
-}

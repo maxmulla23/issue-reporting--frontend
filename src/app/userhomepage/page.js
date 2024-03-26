@@ -20,6 +20,7 @@ import axios from "axios";
 
 export default function Page() {
   const [data, setData] = React.useState()
+  const [recommendations, setRecommendations] = React.useState()
   const session = useSession();
   const [activeTab, setActiveTab] = React.useState("html");
   
@@ -27,7 +28,7 @@ export default function Page() {
     async function getUserIssues () { 
       try {
         console.log(session)
-        const response = await axios.get(`/api/issue?userId=${session?.data?.id}`)
+        const response = await axios.get(`/api/issue?userId=${session?.recommendations?.id}`)
         console.log(response)
       setData(response.data);
       } catch (error) {
@@ -38,17 +39,29 @@ export default function Page() {
     getUserIssues()
   }, [session.status])
   
+  React.useEffect(() => {
+    async function getUserRecommendations () {
+      try {
+        const response = await axios.get(`/api/recommendation?userId=${session?.recommendations?.id}`)
+        console.log(response)
+        setRecommendations(response.recommendations)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getUserRecommendations()
+  }, [session.status === 'authenticated', recommendations]);
 
 
   return (
     <div className="flex flex-row text-black-500 fixed ml-5 top-0 mt-4 w-[75%] overflow-hidden">
       <div className="flex flex-col">
         <UserCircleIcon className="h-56 w-auto ml-2" />
-        <h1 className="ml-14 text-2xl">{session?.data?.name}</h1>
+        <h1 className="ml-14 text-2xl">{session?.recommendations?.name}</h1>
       </div>
       <div className="left-30 ml-12 mt-20 w-full">
         <h1 className="font-mono md:font-serif text-3xl mt-3">
-          {session?.data?.email}
+          {session?.recommendations?.email}
         </h1>
         
        
@@ -62,7 +75,7 @@ export default function Page() {
                 "bg-teal-50 border-b-2 border-gray-800 shadow-none rounded-none",
             }}
           >
-            {/* {data.map(({ label, value }) => ( */}
+            {/* {recommendations.map(({ label, value }) => ( */}
             <Tab
               value={"bugIssue"}
               onClick={() => setActiveTab("bugIssue")}
@@ -75,7 +88,7 @@ export default function Page() {
               onClick={() => setActiveTab("bugIssue1")}
               className={activeTab === "bugIssue1" ? "text-gray-700" : ""}
             >
-              Issue Report
+              Issue Report2
             </Tab>
             {/* ))} */}
           </TabsHeader>
@@ -96,10 +109,37 @@ export default function Page() {
         </Popover>
                   
                 </div>
-                {data?.map((data) => (
+                {recommendations?.map((recommendations) => (
                   <Alert variant="ghost">
-                    <Typography color="teal" variant="h4">{data.title}</Typography>
-                    <span>{data.description}</span>
+                    <Typography color="teal" variant="h4">{recommendations.title}</Typography>
+                    <span>{recommendations.description}</span>
+                  </Alert>
+                ))}
+              </div>
+            </TabPanel>
+
+
+                    {/* tab body 2 */}
+            <TabPanel value="bugIssue1">
+              <div className="flex flex-col w-full space-y-6">
+                <div className="flex justify-between">
+                  <h3 className="text-4xl my-6 font-bold">My Recommendations</h3>
+                  <Popover>
+          <PopoverHandler>
+          <button className="bg-teal-400 text-white font-bold py-2 px-4 border border-teal-400 mt-3">
+                    New Recommendation
+                  </button>
+          </PopoverHandler>
+          <PopoverContent>
+            <ReportBugform />
+          </PopoverContent>
+        </Popover>
+                  
+                </div>
+                {recommendations?.map((recommendations) => (
+                  <Alert variant="ghost">
+                    <Typography color="teal" variant="h4">{recommendations.title}</Typography>
+                    <span>{recommendations.description}</span>
                   </Alert>
                 ))}
               </div>
@@ -116,7 +156,7 @@ export default function Page() {
                   "bg-teal-50 border-b-2 border-gray-800 shadow-none rounded-none",
               }}
             >
-              {data.map(({ label, value }) => (
+              {recommendations.map(({ label, value }) => (
                 <Tab
                   key={value}
                   value={value}
