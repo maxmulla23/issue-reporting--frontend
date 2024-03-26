@@ -9,10 +9,11 @@ import {
   PopoverContent,
   Button,
   Select,
+  Option,
   } from "@material-tailwind/react";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
-import React from "react";
+import React, { useEffect } from "react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -26,7 +27,7 @@ export default function CreateTask()
         assignedTo:""
     })
     const [date, setDate] = React.useState(null);
-
+    const [developer, setDeveloper] = React.useState()
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
@@ -55,6 +56,14 @@ export default function CreateTask()
       }
       setFormData(updatedData)
     }
+    React.useEffect(() => {
+      async function getDeveloper () {
+          const response = await axios.get(`/api/developer`)
+          console.log(response)
+          setDeveloper(response.developer)
+      }
+      getDeveloper()
+  }, [])  
 
     return(
         <>
@@ -79,14 +88,12 @@ export default function CreateTask()
                         name="description"
                         size="lg" 
                 />
-                <Select
-                color="teal"
-                label="choose developer"
-                value="assignedTo"
-                onChange={handleChange}
-                >
-
+                <Select>
+                {developer?.map((developer) => {
+                  <Option>{developer.name}</Option>
+                })}
                 </Select>
+               
         <Popover placement="bottom">
         <PopoverHandler>
           <Input
