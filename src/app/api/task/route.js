@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   const body = await request.json();
-  const { name, description, developerId } = body;
+  const { name, description, developerId, endDate } = body;
 
   if (!name || !description ) {
     return new NextResponse("Missing Fields", { status: 400 });
@@ -17,10 +17,12 @@ export async function POST(request) {
         developerId,
         endDate
       },
+      include: { AssignedTo: true }
     });
 
     return NextResponse.json(newTask);
   } catch (error) {
+    console.log(error);
     return new NextResponse("Internal Server Error", { status: 500 });
   }
 }

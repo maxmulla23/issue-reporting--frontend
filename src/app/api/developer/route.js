@@ -29,7 +29,7 @@ export async function POST(request) {
 export async function GET(request) {
   
   try {
-    const developers = await prisma.task.findMany();
+    const developers = await prisma.developer.findMany();
     console.log(developers);
     return NextResponse.json(developers);
    

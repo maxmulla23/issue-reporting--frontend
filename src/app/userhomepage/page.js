@@ -12,27 +12,32 @@ import {
   Alert,
   TabsBody,
   TabPanel,
+  Typography,
 } from "@material-tailwind/react";
 import ReportBugform from "../components/forms/reportbug";
 import { useSession } from "next-auth/react";
 import axios from "axios";
 
-const user = {
-  username: "maxmulla",
-  email: "maxmulla23@email.com",
-  Usertype: "Student",
-};
-
 export default function Page() {
+  const [data, setData] = React.useState()
+  const session = useSession();
   const [activeTab, setActiveTab] = React.useState("html");
+  
   React.useEffect(()=> {
     async function getUserIssues () { 
-      const response = await axios.get(`/api/issue?userId={session?.data?.id}`)
-      console.log(response)
+      try {
+        console.log(session)
+        const response = await axios.get(`/api/issue?userId=${session?.data?.id}`)
+        console.log(response)
+      setData(response.data);
+      } catch (error) {
+        console.log(error)
+      }
+      
     }
     getUserIssues()
-  }, [])
-  const session = useSession();
+  }, [session.status])
+  
 
 
   return (
@@ -91,9 +96,10 @@ export default function Page() {
         </Popover>
                   
                 </div>
-                {[1, 2, 3, 4, 5].map((item) => (
-                  <Alert variant="outlined">
-                    <span>A simple outlined alert for showing message.</span>
+                {data?.map((data) => (
+                  <Alert variant="ghost">
+                    <Typography>{data.title}</Typography>
+                    <span>{data.description}</span>
                   </Alert>
                 ))}
               </div>

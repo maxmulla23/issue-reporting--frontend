@@ -3,6 +3,7 @@
 import AddDeveloperForm from "@/app/components/forms/adddev";
 import { Button, Card, Popover, PopoverContent, PopoverHandler, Typography } from "@material-tailwind/react"
 import axios from "axios";
+import React from "react";
 
 
 const TABLE_HEAD = ["Name", "Email", " "]
@@ -16,9 +17,18 @@ const TABLE_HEAD = ["Name", "Email", " "]
 //     return res.json();
 // }
 
-export default async function Page()
+export default function Page()
 {
-    // const data = await getData();   
+    const[data, setData] = React.useState()
+    // const data = await getData();
+    React.useEffect(() => {
+        async function getDeveloper () {
+            const response = await axios.get(`/api/developer`)
+            console.log(response)
+            setData(response.data)
+        }
+        getDeveloper()
+    }, [])   
     return(
         <div className="mt-10">
             <Typography variant="h2" color="teal">Developers</Typography>
@@ -50,17 +60,17 @@ export default async function Page()
                     </tr>
                 </thead>
                 <tbody>
-                {/* {data.map((developers)=> (
-                        <tr key={developers} className="even:bg-blue-gray-50/50">
+                {data?.map((data)=> (
+                        <tr key={data} className="even:bg-blue-gray-50/50">
                             <td className="p-4">
                                 <Typography variant="small" color="blue-gray" className="font-normal">
-                                {developers.name}
+                                {data.name}
                                 </Typography>   
                             </td>
 
                             <td className="p-4">
                                 <Typography variant="small" color="blue-gray" className="font-normal">
-                                {developers.email}
+                                {data.email}
                                 </Typography>   
                             </td>
                             <td className="p-4">
@@ -68,7 +78,7 @@ export default async function Page()
                             </td>
                         </tr>
                         
-                    ))} */}
+                    ))}
                 </tbody>
             </table>
         </Card>
