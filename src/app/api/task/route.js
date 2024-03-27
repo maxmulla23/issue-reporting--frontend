@@ -17,7 +17,7 @@ export async function POST(request) {
         developerId,
         endDate
       },
-      include: { AssignedTo: true }
+     
     });
 
     return NextResponse.json(newTask);
@@ -55,22 +55,16 @@ export async function PUT(request) {
   }
 }
 export async function GET(request) {
-    console.log(request);
-    const { searchParams } = new URL(request.url);
-  
-    console.log(searchParams);
-  
-    let developerId = parseInt(searchParams.get("developerId"));
-  
-    console.log(userId);
+   
     try {
-      const devAssignedTasks = await prisma.task.findMany({
-        where: {
-          developerId,
-        },
+      const AllTasks = await prisma.task.findMany({
+        include: { AssignedTo: true },
+        orderBy: {
+          id : 'asc'
+        }
       });
   
-      return NextResponse.json(devAssignedTasks);
+      return NextResponse.json(AllTasks);
     } catch (error) {
       console.log(error);
       return new NextResponse("Internal Server Error", { status: 500 });

@@ -1,8 +1,8 @@
 'use client'
 import React from "react";
-import CreateTask from "@/app/components/forms/create-taskform";
 import { Card, Popover, PopoverContent, PopoverHandler, Typography } from "@material-tailwind/react";
 import axios from "axios";
+import CreateTaskForm from "@/app/components/forms/create-taskform";
 
 const TABLE_HEAD = ["Task Title", "Description", "Start Date", "End Date", "Status", "Assigned To" ]
 
@@ -15,7 +15,7 @@ const TABLE_HEAD = ["Task Title", "Description", "Start Date", "End Date", "Stat
 //   return res.json();
 // }
 
-export default async function page() {
+export default function page() {
 
     const [data, setData] = React.useState()
     React.useEffect(() => {
@@ -30,7 +30,7 @@ export default async function page() {
            
         }
         getTasks()
-    })
+    }, [])
     return(
         <div>
         <h1>this is data page</h1>
@@ -40,7 +40,7 @@ export default async function page() {
             <button className="bg-teal-400 text-white font-bold py-2 px-4 border border-teal-400 mt-3">Create Task</button>
             </PopoverHandler>
             <PopoverContent>
-              <CreateTask />
+              <CreateTaskForm />
             </PopoverContent>
           </Popover> 
           <Card className="h-full w-full overflow-scroll">
@@ -91,7 +91,7 @@ export default async function page() {
                        </td>
                        <td className="p-4">
                            <Typography variant="small" color="blue-gray" className="font-normal">
-                           {data.assignedTo}
+                           {data.AssignedTo.name}
                            </Typography>   
                        </td>
                        

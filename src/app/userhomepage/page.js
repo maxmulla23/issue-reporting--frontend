@@ -17,6 +17,7 @@ import {
 import ReportBugform from "../components/forms/reportbug";
 import { useSession } from "next-auth/react";
 import axios from "axios";
+import RecommendationForm from "../components/forms/recommendationsform";
 
 export default function Page() {
   const [data, setData] = React.useState()
@@ -28,7 +29,7 @@ export default function Page() {
     async function getUserIssues () { 
       try {
         console.log(session)
-        const response = await axios.get(`/api/issue?userId=${session?.recommendations?.id}`)
+        const response = await axios.get(`/api/issue?userId=${session?.data?.id}`)
         console.log(response)
       setData(response.data);
       } catch (error) {
@@ -42,7 +43,7 @@ export default function Page() {
   React.useEffect(() => {
     async function getUserRecommendations () {
       try {
-        const response = await axios.get(`/api/recommendation?userId=${session?.recommendations?.id}`)
+        const response = await axios.get(`/api/recommendation?userId=${session?.data?.id}`)
         console.log(response)
         setRecommendations(response.recommendations)
       } catch (error) {
@@ -50,18 +51,18 @@ export default function Page() {
       }
     }
     getUserRecommendations()
-  }, [session.status === 'authenticated', recommendations]);
+  }, [session.status]);
 
 
   return (
     <div className="flex flex-row text-black-500 fixed ml-5 top-0 mt-4 w-[75%] overflow-hidden">
       <div className="flex flex-col">
         <UserCircleIcon className="h-56 w-auto ml-2" />
-        <h1 className="ml-14 text-2xl">{session?.recommendations?.name}</h1>
+        <h1 className="ml-14 text-2xl">{session?.data?.name}</h1>
       </div>
       <div className="left-30 ml-12 mt-20 w-full">
         <h1 className="font-mono md:font-serif text-3xl mt-3">
-          {session?.recommendations?.email}
+          {session?.data?.email}
         </h1>
         
        
@@ -88,7 +89,7 @@ export default function Page() {
               onClick={() => setActiveTab("bugIssue1")}
               className={activeTab === "bugIssue1" ? "text-gray-700" : ""}
             >
-              Issue Report2
+              Recommendations
             </Tab>
             {/* ))} */}
           </TabsHeader>
@@ -109,10 +110,10 @@ export default function Page() {
         </Popover>
                   
                 </div>
-                {recommendations?.map((recommendations) => (
+                {data?.map((data) => (
                   <Alert variant="ghost">
-                    <Typography color="teal" variant="h4">{recommendations.title}</Typography>
-                    <span>{recommendations.description}</span>
+                    <Typography color="teal" variant="h4">{data.title}</Typography>
+                    <span>{data.description}</span>
                   </Alert>
                 ))}
               </div>
@@ -131,7 +132,7 @@ export default function Page() {
                   </button>
           </PopoverHandler>
           <PopoverContent>
-            <ReportBugform />
+            <RecommendationForm />
           </PopoverContent>
         </Popover>
                   

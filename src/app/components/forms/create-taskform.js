@@ -1,4 +1,4 @@
-'use client'
+"use client"
 import {
     Card,
     CardBody,
@@ -13,36 +13,56 @@ import {
   } from "@material-tailwind/react";
 import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
-import React, { useEffect } from "react";
+import React from "react";
 import { ChevronRightIcon, ChevronLeftIcon } from "@heroicons/react/24/outline";
 import { toast } from "react-toastify";
 import axios from "axios";
 
-export default function CreateTask()
+export default function CreateTaskForm()
 {
     const [formData, setFormData] = React.useState({
         name: "",
         description: "",
+        developerId: "",
         endDate:"",
-        developerId: ""
     })
-    const [date, setDate] = React.useState(null);
-    const [developer, setDeveloper] = React.useState()
+  const [date, setDate] = React.useState(null);
+  const [data, setData] = React.useState()
+
+    React.useEffect(() => {
+      async function getDevs () {
+        try {
+          const devs = await axios.get(`/api/developer`)
+        console.log(devs)
+        setData(devs.data)
+        console.log(devs.data)
+        } catch (error) {
+          console.log(error)
+        }
+        
+      }
+      getDevs()
+    }, [])
+
     const handleSubmit = async (e) => {
       e.preventDefault();
       try {
         let newFormdata = {
             ...formData,
+            
         }
-        console.log(newFormdata)
+        // console.log(newFormdata)
         const response = await axios.post("/api/task", newFormdata)
-        console.log(response)
+
+        // console.log(response)
         toast.success("Task created successfully")
       } catch(error) {
         console.log(error)
         toast.error("Failed! Please check your inputs.")
       }
     }
+    
+
     const handleChange = (e) => {
       const name = e.target.name;
       const value = e.target.value
@@ -56,14 +76,7 @@ export default function CreateTask()
       }
       setFormData(updatedData)
     }
-    React.useEffect(() => {
-      async function getDeveloper () {
-          const response = await axios.get(`/api/developer`)
-          console.log(response)
-          setDeveloper(response.developer)
-      }
-      getDeveloper()
-  }, [])  
+
 
     return(
         <>
@@ -88,12 +101,15 @@ export default function CreateTask()
                         name="description"
                         size="lg" 
                 />
-                <Select>
-                {developer?.map((developer) => {
-                  <Option>{developer.name}</Option>
-                })}
+                <Select onChange={handleChange} name="developerId" value="developerId" label="choose a developer" color="teal">
+                  {data?.map((data) => {
+                    <Option key={data.id} value={data.id}>
+                      {data.name}
+                    </Option>
+                  })}
                 </Select>
-               
+                
+        
         <Popover placement="bottom">
         <PopoverHandler>
           <Input

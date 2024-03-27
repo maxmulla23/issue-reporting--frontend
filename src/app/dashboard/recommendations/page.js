@@ -1,4 +1,5 @@
-import { Typography } from "@material-tailwind/react";
+"use client"
+import { Alert, Typography } from "@material-tailwind/react";
 import axios from "axios";
 import React from "react";
 
@@ -6,15 +7,22 @@ export default function Page(){
     const [data, setData] = React.useState()
 
     React.useEffect(() => {
-        async function getAllRecommendations () {
-            const response = axios.get(`/api/allRecommendation`)
-            setData(response.data)
+        try {
+            async function getAllRecommendations () {
+                const response = await axios.get(`/api/alRecommendations`)
+                console.log(response)
+                setData(response.data)
+            }
+            getAllRecommendations();
+        } catch (error) {
+            console.log(error)
         }
-        getAllRecommendations();
+       
     }, [])
     return (
-        <>
+        <div>
         <Typography variant="h4" color="teal">All Recommendations</Typography>
+        <div>
         <div className="flex flex-wrap mt-4 gap-3">
         {data?.map((data) => (
             <Alert variant="ghost">
@@ -25,6 +33,7 @@ export default function Page(){
             </Alert>
         ))}
         </div>
-        </>
+        </div>
+        </div>
     )
 }

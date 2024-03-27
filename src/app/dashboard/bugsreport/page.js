@@ -26,6 +26,7 @@ export default function Page(){
                 <ul className="mt-2 ml-2 list-inside list-disc">
                     <li>{data.description}</li>
                 </ul>
+                <Typography variant="h5">Reported By: {data.reported.name}</Typography>
             </Alert>
         ))}
         </div>

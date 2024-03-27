@@ -2,6 +2,7 @@
 
 import React from "react";
 import { Button, Card, Typography } from "@material-tailwind/react";
+import axios from "axios";
 
 const TABLE_HEAD = ["UserName", "e-mail address", " "];
 
@@ -14,7 +15,7 @@ const TABLE_HEAD = ["UserName", "e-mail address", " "];
 //     return res.json();
 // }
 
-export default async function Page() {
+export default function Page() {
     const[data, setData] = React.useState()
     React.useEffect(() => {
         async function getUsers () {
@@ -43,17 +44,17 @@ export default async function Page() {
                     </tr>
                 </thead>
                 <tbody>
-                    {data.map((data) => (
+                    {data?.map((data) => (
                        <tr key={data} className="even:bg-blue-gray-50/50">
                        <td className="p-4">
                            <Typography variant="small" color="blue-gray" className="font-normal">
-                           {users.name}
+                           {data.name}
                            </Typography>   
                        </td>
 
                        <td className="p-4">
                            <Typography variant="small" color="blue-gray" className="font-normal">
-                           {users.email}
+                           {data.email}
                            </Typography>   
                        </td>
                        
