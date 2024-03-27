@@ -108,14 +108,14 @@ export default function Sidebar(){
                         Users
                     </ListItem>
                     </Link>
-                    <Link href="/dashboard/developers">
+                    {/* <Link href="/dashboard/developers">
                         <ListItem>
                             <ListItemPrefix>
                                 <UserGroupIcon className="h-5 w-5" />
                             </ListItemPrefix>
                             Developers
                         </ListItem>
-                    </Link>
+                    </Link> */}
                     
             </List>
             <hr className="my-50 border-blue-gray-50" />

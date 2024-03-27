@@ -56,14 +56,21 @@ export default function Page() {
 
   return (
     <div className="flex flex-row text-black-500 fixed ml-5 top-0 mt-4 w-[75%] overflow-hidden">
-      <div className="flex flex-col">
+
+      
+      <div className="flex flex-col text-teal-400 mt-8" >
+      <Typography variant="h4">Welcome {session?.data?.name}</Typography>
         <UserCircleIcon className="h-56 w-auto ml-2" />
         <h1 className="ml-14 text-2xl">{session?.data?.name}</h1>
       </div>
       <div className="left-30 ml-12 mt-20 w-full">
-        <h1 className="font-mono md:font-serif text-3xl mt-3">
+        <h1 className="font-mono md:font-serif text-5xl mt-3">
           {session?.data?.email}
         </h1>
+        <p>
+          {session?.data?.type}
+        </p>
+        <hr className="my-50 mt-5 border-blue-gray-100"/>
         
        
 

@@ -28,9 +28,9 @@ const router = useRouter();
 
   useEffect(() => {
     if (session?.status === 'authenticated') {
-       router.push('/login') 
+       router.push('/userhomepage') 
     }
-})
+}, [session?.status])
 
   console.log(formData);
 

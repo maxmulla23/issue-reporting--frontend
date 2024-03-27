@@ -1,10 +1,11 @@
 'use client'
 import React from "react";
-import { Card, Popover, PopoverContent, PopoverHandler, Typography } from "@material-tailwind/react";
+import { Button, Card, Popover, PopoverContent, PopoverHandler, Typography } from "@material-tailwind/react";
 import axios from "axios";
 import CreateTaskForm from "@/app/components/forms/create-taskform";
+import { useRouter } from "next/router";
 
-const TABLE_HEAD = ["Task Title", "Description", "Start Date", "End Date", "Status", "Assigned To" ]
+const TABLE_HEAD = ["Task Title", "Description", "Start Date", "Status", "" ]
 
 // async function getData() {
 //   const res = await fetch('http://localhost:5030/api/Todo');
@@ -16,7 +17,7 @@ const TABLE_HEAD = ["Task Title", "Description", "Start Date", "End Date", "Stat
 // }
 
 export default function page() {
-
+    // const router = useRouter();
     const [data, setData] = React.useState()
     React.useEffect(() => {
         async function getTasks () {
@@ -27,7 +28,6 @@ export default function page() {
             } catch (error) {
                 console.log(error)
             }
-           
         }
         getTasks()
     }, [])
@@ -76,21 +76,17 @@ export default function page() {
                        </td>
                        <td className="p-4">
                            <Typography variant="small" color="blue-gray" className="font-normal">
-                           {data.startDate}
-                           </Typography>   
-                       </td>
-                       <td className="p-4">
-                           <Typography variant="small" color="blue-gray" className="font-normal">
-                           {data.endDate}
+                           {data.CreatedAt}
                            </Typography>   
                        </td>
                        <td className="p-4">
                            <Typography variant="small" color="blue-gray" className="font-normal">
                            {data.status}
                            </Typography>   
+                       </td>   
+                       <td className="p-4">
+                       {/* <Button onClick={() =>  router.push("/editTask")}>Edit</Button> */}
                        </td>
-                       
-                       
                    </tr>
                     ))} 
                        
