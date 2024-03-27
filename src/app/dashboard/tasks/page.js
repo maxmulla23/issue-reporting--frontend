@@ -89,11 +89,7 @@ export default function page() {
                            {data.status}
                            </Typography>   
                        </td>
-                       <td className="p-4">
-                           <Typography variant="small" color="blue-gray" className="font-normal">
-                           {data.AssignedTo.name}
-                           </Typography>   
-                       </td>
+                       
                        
                    </tr>
                     ))} 

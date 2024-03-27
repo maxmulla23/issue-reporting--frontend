@@ -24,8 +24,9 @@ export default function RecommendationForm()
             console.log(newFormdata)
             const response = await axios.post("/api/recommendation", newFormdata)
             console.log(response)
-            toast.success("Your bug report has been submitted!")
+            toast.success("Your recommendation has been submitted!")
         } catch (error) {
+            console.log(error)
             toast.error("Error occurred!");
         }
     }
@@ -61,7 +62,7 @@ export default function RecommendationForm()
                         color="teal"
                         type="text"
                         label="Description" size="lg" 
-                        name="title"/>
+                        name="description"/>
                     
                 </CardBody>
                 <CardFooter>

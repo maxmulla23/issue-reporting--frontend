@@ -21,7 +21,7 @@ import RecommendationForm from "../components/forms/recommendationsform";
 
 export default function Page() {
   const [data, setData] = React.useState()
-  const [recommendations, setRecommendations] = React.useState()
+  const [issues, setIssues] = React.useState()
   const session = useSession();
   const [activeTab, setActiveTab] = React.useState("html");
   
@@ -45,7 +45,7 @@ export default function Page() {
       try {
         const response = await axios.get(`/api/recommendation?userId=${session?.data?.id}`)
         console.log(response)
-        setRecommendations(response.recommendations)
+        setIssues(response.data)
       } catch (error) {
         console.log(error)
       }
@@ -124,7 +124,7 @@ export default function Page() {
             <TabPanel value="bugIssue1">
               <div className="flex flex-col w-full space-y-6">
                 <div className="flex justify-between">
-                  <h3 className="text-4xl my-6 font-bold">My Recommendations</h3>
+                  <h4 className="text-4xl my-6 font-bold">My Recommendations</h4>
                   <Popover>
           <PopoverHandler>
           <button className="bg-teal-400 text-white font-bold py-2 px-4 border border-teal-400 mt-3">
@@ -137,10 +137,10 @@ export default function Page() {
         </Popover>
                   
                 </div>
-                {recommendations?.map((recommendations) => (
+                {issues?.map((issue) => (
                   <Alert variant="ghost">
-                    <Typography color="teal" variant="h4">{recommendations.title}</Typography>
-                    <span>{recommendations.description}</span>
+                    <Typography color="teal" variant="h4">{issue.title}</Typography>
+                    <span>{issue.description}</span>
                   </Alert>
                 ))}
               </div>

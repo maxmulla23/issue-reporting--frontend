@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function POST(request) {
   const body = await request.json();
-  const { name, description, developerId, endDate } = body;
+  const { name, description } = body;
 
   if (!name || !description ) {
     return new NextResponse("Missing Fields", { status: 400 });
@@ -14,8 +14,6 @@ export async function POST(request) {
       data: {
         name,
         description,
-        developerId,
-        endDate
       },
      
     });
@@ -41,8 +39,6 @@ export async function PUT(request) {
         id,
       },
       data: {
-        name,
-        description,
         status
       },
     });
@@ -58,7 +54,6 @@ export async function GET(request) {
    
     try {
       const AllTasks = await prisma.task.findMany({
-        include: { AssignedTo: true },
         orderBy: {
           id : 'asc'
         }

@@ -30,6 +30,7 @@ export default function Page(){
                 <ul className="mt-2 ml-2 list-inside list-disc">
                     <li>{data.description}</li>
                 </ul>
+                <Typography variant="h5" color="teal">Recommender: {data.author.name}</Typography>
             </Alert>
         ))}
         </div>

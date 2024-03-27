@@ -27,7 +27,7 @@ const router = useRouter();
 
 
   useEffect(() => {
-    if (session?.status === 'loading') {
+    if (session?.status === 'authenticated') {
        router.push('/login') 
     }
 })
